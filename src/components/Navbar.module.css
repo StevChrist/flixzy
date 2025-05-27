@@ -1,0 +1,35 @@
+/* src/components/Navbar.module.css */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Ubah padding horizontal menjadi 0 atau nilai kecil jika masih perlu spasi internal tambahan */
+  padding: 1.5rem 0; /* Sebelumnya mungkin ada padding horizontal, misal 3rem */
+  width: 100%; /* Navbar akan mengisi lebar .site-wrapper */
+  box-sizing: border-box;
+  /* position: absolute/fixed dan z-index bisa dipertahankan jika diperlukan */
+  position: relative; /* Ubah jika sebelumnya absolute/fixed dan sekarang tidak perlu */
+}
+
+/* ... (style .logo dan .navLinks lainnya tetap sama) ... */
+.logo {
+  font-family: var(--font-oswald);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  text-decoration: none;
+}
+
+.navLinks a {
+  font-family: var(--font-inter);
+  color: var(--color-text-main);
+  text-decoration: none;
+  margin-left: 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.navLinks a:hover {
+  color: var(--color-accent);
+}

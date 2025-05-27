@@ -1,0 +1,10 @@
+# backend/requirements.txt
+fastapi
+uvicorn[standard]
+pymongo
+dnspython
+openai
+numpy
+faiss-cpu
+pandas
+python-dotenv

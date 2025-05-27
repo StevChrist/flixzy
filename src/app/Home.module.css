@@ -1,0 +1,45 @@
+/* src/app/Home.module.css */
+
+.mainContent {
+  flex-grow: 1;         /* 1. Membuat area ini mengisi sisa ruang vertikal yang tersedia */
+  display: flex;          /* 2. Mengaktifkan Flexbox */
+  justify-content: center;/* 3. Memusatkan child (.heroSection) secara horizontal */
+  align-items: center;    /* 4. Memusatkan child (.heroSection) secara vertikal */
+  width: 100%;
+  padding: 2rem 0;        /* Padding atas & bawah, padding horizontal dari .site-wrapper */
+  box-sizing: border-box;
+}
+
+.heroSection {
+  display: flex;             /* 5. Mengaktifkan Flexbox untuk .heroSection */
+  flex-direction: column;    /* 6. Menyusun item di dalamnya (heading, subheading, searchbar) secara vertikal */
+  align-items: center;       /* 7. Memusatkan item-item tersebut secara horizontal di dalam .heroSection */
+  text-align: center;        /* 8. Memastikan teks di dalam elemen blok juga terpusat */
+  justify-content: center;
+  max-width: 700px;
+  width: 100%;
+}
+
+.welcomeHeading {
+  font-family: var(--font-oswald);
+  font-size: 3.8rem;
+  font-weight: 500;
+  color: var(--color-text-main); /* "Welcome to" */
+  margin-bottom: 0.25rem;
+  line-height: 1.1;
+}
+
+.flixzyHighlight {
+  color: var(--color-accent); /* "Flixzy" */
+  font-weight: 700;
+}
+
+.subHeading {
+  font-family: var(--font-inter);
+  font-size: 1.15rem;
+  color: var(--color-text-main); /* Sub-heading */
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  max-width: 450px;
+  line-height: 1.6;
+}
