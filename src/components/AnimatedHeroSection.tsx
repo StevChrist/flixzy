@@ -1,9 +1,8 @@
-// src/components/AnimatedHeroSection.tsx
-'use client'; // Komponen ini perlu menjadi Client Component untuk animasi
+'use client';
 
 import { motion } from 'framer-motion';
 import SearchBar from './SearchBar';
-import styles from '../app/Home.module.css'; // Menggunakan style dari Home.module.css
+import styles from '../app/Home.module.css';
 
 const subHeadingText = "What film are you looking for?";
 
@@ -26,10 +25,14 @@ const itemVariants = {
   },
 };
 
-export default function AnimatedHeroSection() {
+type AnimatedHeroSectionProps = {
+  onSearch: (query: string) => void;
+};
+
+export default function AnimatedHeroSection({ onSearch }: AnimatedHeroSectionProps) {
   return (
     <motion.div
-      className={styles.heroSection} // .heroSection punya max-width: 700px dan align-items: center
+      className={styles.heroSection}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -42,16 +45,15 @@ export default function AnimatedHeroSection() {
         {subHeadingText}
       </motion.p>
 
-      {/* Modifikasi motion.div pembungkus SearchBar */}
       <motion.div
         variants={itemVariants}
         style={{
-          width: '100%', // Membuat pembungkus ini mengambil lebar penuh dari .heroSection
-          display: 'flex',          // Untuk memusatkan SearchBar di dalamnya jika SearchBar lebih sempit
-          justifyContent: 'center'  // Memusatkan SearchBar secara horizontal
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center'
         }}
       >
-        <SearchBar /> {/* SearchBar akan menggunakan width & max-width dari CSS-nya sendiri */}
+        <SearchBar onSearch={onSearch} />
       </motion.div>
     </motion.div>
   );

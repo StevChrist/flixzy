@@ -1,21 +1,25 @@
-// src/components/SearchBar.tsx
 'use client';
 
-import { useState} from 'react';
+import { useState } from 'react';
 import styles from './SearchBar.module.css';
 import { FiSearch } from 'react-icons/fi';
 import { IconContext } from "react-icons";
 
-export default function SearchBar() {
+type SearchBarProps = {
+  onSearch: (query: string) => void;
+};
+
+export default function SearchBar({ onSearch }: SearchBarProps) {
   const [query, setQuery] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
-    window.open(`/search-results?query=${encodeURIComponent(query)}`, '_blank', 'noopener,noreferrer');
+    onSearch(query);
+    setQuery('');
   };
 
-  return (  
+  return (
     <form onSubmit={handleSearch} className={styles.searchFormContainer}>
       <div className={styles.searchContainer}>
         <IconContext.Provider value={{ className: styles.searchIcon }}>

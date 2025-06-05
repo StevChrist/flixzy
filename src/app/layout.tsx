@@ -19,10 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* Tambahkan div pembungkus di sini */}
         <div className="site-wrapper">
           <Navbar />
-          <main>{children}</main> {/* Bungkus children dengan <main> untuk semantik */}
+          <main>{children}</main>
         </div>
       </body>
     </html>

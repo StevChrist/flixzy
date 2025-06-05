@@ -1,7 +1,5 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import styles from './SearchResults.module.css';
 
@@ -12,9 +10,6 @@ type Movie = {
   genres?: string[];
   release_date?: string;
   runtime?: number;
-  vote_average?: number;
-  vote_count?: number;
-  poster_path?: string | null;
   director?: string;
   cast?: string[];
   keywords?: string[];
@@ -31,60 +26,34 @@ function DetailRow({ label, value }: { label: string; value?: string }) {
   );
 }
 
-// Variants seperti di AnimatedAboutContent.tsx
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.25,
-    },
+    transition: { staggerChildren: 0.25 },
   },
 };
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" }
-  },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
-export default function SearchResultsPage() {
-  const searchParams = useSearchParams();
-  const query = searchParams.get('query') || '';
-  const [results, setResults] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!query) return;
-    setLoading(true);
-    fetch('http://localhost:8000/search/hybrid', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query }),
-    })
-      .then(res => {
-        if (!res.ok) throw new Error('Network response was not ok');
-        return res.json();
-      })
-      .then((data) => setResults(data.results || []))
-      .catch(() => setResults([]))
-      .finally(() => setLoading(false));
-  }, [query]);
+export default function SearchResults({
+  query,
+  results,
+  loading,
+}: {
+  query: string;
+  results: Movie[];
+  loading: boolean;
+}) {
+  if (!query) return null;
 
   return (
     <div className={styles.pageContainer}>
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.h2
-          className={styles.queryHeading}
-          variants={itemVariants}
-        >
+      <motion.div variants={containerVariants} initial="hidden" animate="visible">
+        <motion.h2 className={styles.queryHeading} variants={itemVariants}>
           Results for : <span style={{ color: '#e7b7a3', fontSize: '3rem' }}>{query}</span>
         </motion.h2>
         {loading && (

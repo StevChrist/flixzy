@@ -30,11 +30,11 @@ def get_movie_details_by_tmdb_ids(tmdb_ids: List[Any]) -> List[Dict[str, Any]]: 
     return found_movies
 
 
-def hybrid_search_logic(query_input: str, num_results: int = 10) -> List[Dict[str, Any]]: #
+def hybrid_search_logic(query_input: str, num_results: int = 10) -> List[Dict[str, Any]]:
     if not query_input:
         print("Query input diperlukan untuk hybrid_search.")
         return []
-    if db_instance is None: # Cek apakah koneksi DB berhasil
+    if db_instance is None:
         print("Koneksi database tidak tersedia untuk hybrid_search.")
         return []
 
@@ -44,27 +44,64 @@ def hybrid_search_logic(query_input: str, num_results: int = 10) -> List[Dict[st
         return []
 
     movie_docs_list = get_movie_details_by_tmdb_ids(similar_tmdb_ids)
-    
     queryable_tmdb_ids = [m.get("tmdb_id") for m in movie_docs_list if m.get("tmdb_id") is not None]
 
     ratings_map = {}
     if ratings_collection is not None and queryable_tmdb_ids:
-        ratings_cursor = ratings_collection.find({"tmdb_id": {"$in": queryable_tmdb_ids}}, {"_id": 0, "tmdb_id": 1, "avg_rating": 1})
+        ratings_cursor = ratings_collection.find({"tmdb_id": {"$in": queryable_tmdb_ids}}, {"_id": 0})
         ratings_map = {doc["tmdb_id"]: doc.get("avg_rating") for doc in ratings_cursor}
 
     popularity_map = {}
     if popularity_collection is not None and queryable_tmdb_ids:
-        popularity_cursor = popularity_collection.find({"tmdb_id": {"$in": queryable_tmdb_ids}}, {"_id": 0, "tmdb_id": 1, "popularity": 1})
+        popularity_cursor = popularity_collection.find({"tmdb_id": {"$in": queryable_tmdb_ids}}, {"_id": 0})
         popularity_map = {doc["tmdb_id"]: doc.get("popularity") for doc in popularity_cursor}
 
+    # enriched_movie_docs = []
+    # for movie_doc in movie_docs_list:
+    #     tmdb_id = movie_doc.get("tmdb_id")
+    #     if tmdb_id is not None:
+    #         movie_doc["avg_rating"] = ratings_map.get(tmdb_id)
+    #         movie_doc["popularity"] = popularity_map.get(tmdb_id)
+    #     # Tambahkan kolom movie_videos berdasarkan judul
+    #     title = movie_doc.get("title")
+    #     movie_doc["movie_videos"] = video_links.get(title, "")
+    #     enriched_movie_docs.append(movie_doc)
+
+    #-----------------------------------------------------
     enriched_movie_docs = []
     for movie_doc in movie_docs_list:
         tmdb_id = movie_doc.get("tmdb_id")
         if tmdb_id is not None:
             movie_doc["avg_rating"] = ratings_map.get(tmdb_id)
             movie_doc["popularity"] = popularity_map.get(tmdb_id)
+
+        # Tambahkan kolom movie_videos jika judul cocok
+        title = movie_doc.get("title", "")
+        if title == "Iron Man":
+            movie_doc["movie_video"] = "https://youtu.be/8ugaeA-nMTc?si=w9v-bpZMsZcMuW7D"
+        elif title == "Iron Man 2":
+            movie_doc["movie_video"] = "https://youtu.be/BoohRoVA9WQ?si=AqiRRYo5oGy4vkX_"
+        elif title == "The Invincible Iron Man":
+            movie_doc["movie_video"] = "https://youtu.be/n1JX0iPJze0?si=7BSKADc2NHL6Ddj0"
+        elif title == "The Avengers":
+            movie_doc["movie_video"] = "https://youtu.be/eOrNdBpGMv8?si=iSg6yRnB7j6dB7Kc"
+        elif title == "Iron Man 3":
+            movie_doc["movie_video"] = "https://youtu.be/Ke1Y3P9D0Bc?si=3YV9de5cNrkrcanO"
+        elif title == "Avengers: Age of Ultron":
+            movie_doc["movie_video"] = "https://youtu.be/JAUoeqvedMo?si=f5ZWIHTIcrpF3qU7"
+        elif title == "Iron Man: Rise of Technovore":
+            movie_doc["movie_video"] = "https://youtu.be/toqQI3_eX8o?si=XjgJtKrTk1F9eTqY"
+        elif title == "Iron Man & Hulk: Heroes United":
+            movie_doc["movie_video"] = "https://youtu.be/OOB8iSP6gJM?si=7_NklXHgbV0J2G_X"
+        elif title == "Iron Man & Captain America: Heroes United":
+            movie_doc["movie_video"] = "https://youtu.be/ROZD5uEmhpc?si=cfKVo_isSfrqdI9M"
+        else:
+            movie_doc["movie_video"] = ""  # default kosong jika tidak cocok
+
         enriched_movie_docs.append(movie_doc)
-        
+
+    #-----------------------------------------------------
+
     return enriched_movie_docs
 
 # Jika Anda ingin mengembalikan DataFrame untuk pengujian lokal seperti di notebook:

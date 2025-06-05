@@ -1,0 +1,96 @@
+.pageContainer {
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.queryHeading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  text-align: center;
+}
+
+.loading {
+  color: #e7b7a3;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.empty {
+  color: #aaa;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.resultsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1000px;
+  align-items: center;
+}
+
+.resultLayout {
+  background: #23272f;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  color: #fff;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.detailContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detailLabel {
+  font-weight: 600;
+  color: #e7b7a3;
+  min-width: 120px;
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
+.detailValue {
+  color: #fff;
+  margin-left: 0.5rem;
+  display: inline-block;
+  word-break: break-word;
+}
+
+.pageContainer {
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.queryHeading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  text-align: center;
+  max-width: 700px;      /* Batasi lebar agar tidak selebar layar */
+  margin-left: auto;
+  margin-right: auto;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.contentWrapper {
+  max-width: 100vw;
+  width: 100%;
+}

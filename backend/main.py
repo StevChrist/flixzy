@@ -1,5 +1,3 @@
-# backend/main.py
-
 from fastapi import FastAPI, HTTPException, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -41,6 +39,7 @@ class MovieDetail(BaseModel):
     keywords: Optional[List[str]] = None
     avg_rating: Optional[float] = None
     popularity: Optional[float] = None
+    movie_video: Optional[str] = None  # Menambahkan field movie_video
 
     class Config:
         from_attributes = True
